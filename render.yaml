@@ -1,0 +1,45 @@
+# Render Blueprint: one free web service built from the Dockerfile.
+# The database lives on Neon (free, permanent), see README > Deploy.
+services:
+  - type: web
+    name: envvault
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /up
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: APP_NAME
+        value: EnvVault
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: warning
+      - key: TRUSTED_PROXIES
+        value: "*"
+      # No Redis on the free tier: sessions, cache and queue use the database.
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_ENCRYPT
+        value: true
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: DEMO_SEED
+        value: true
+      # Fill these in the Render dashboard (they are secrets or depend on your account):
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: DB_URL
+        sync: false

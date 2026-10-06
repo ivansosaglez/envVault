@@ -176,6 +176,24 @@ The ports published on your machine (`5433`, `6380` and `8000`) are configurable
 
 with a **Laravel SaaS** project (Local, Staging, Production). The environments differ on purpose (missing, extra, different and empty variables) so every feature has something to show. All values are fake. Change or remove this account before exposing an instance publicly.
 
+## Deploy for free (Render + Neon)
+
+The free tier has no Redis, so the production setup stores sessions and cache in PostgreSQL (`SESSION_DRIVER=database`, `CACHE_STORE=database`, `QUEUE_CONNECTION=sync`). The repo already includes a production `Dockerfile` (nginx + PHP-FPM) and a [`render.yaml`](render.yaml) Blueprint.
+
+1. **Database:** create a free project on [Neon](https://neon.com), turn **Connection pooling off** in the *Connect* dialog and copy the connection string (remove `&channel_binding=require` if present).
+2. **App key:** run `php artisan key:generate --show` locally and keep the result.
+3. **Web service:** on [Render](https://render.com) choose *New → Blueprint*, select this repository and fill in:
+
+| Variable | Value |
+| --- | --- |
+| `APP_KEY` | the key from step 2 |
+| `DB_URL` | the Neon connection string |
+| `APP_URL` | `https://<your-service>.onrender.com` |
+
+4. Render builds the image, runs the migrations automatically and, because `DEMO_SEED=true`, loads the demo account. Set `DEMO_SEED=false` to disable that.
+
+Good to know: free web services sleep after 15 minutes without traffic and take about a minute to wake up. With `DEMO_SEED=true` the demo project is reset on every wake-up, which also cleans up whatever visitors changed. Registration is open, so consider this a public sandbox and never enter real secrets.
+
 ## Testing
 
 ```bash
