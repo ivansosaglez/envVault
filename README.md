@@ -2,6 +2,10 @@
 
 > Know what's missing. Keep your environments under control.
 
+**Live demo:** <https://envvault-8sz5.onrender.com> · Sign in with `demo@example.com` / `password`, or create your own account.
+
+> The demo runs on a free tier, so the first request after a period of inactivity can take about a minute while the app wakes up.
+
 EnvVault is a small, focused tool for Laravel developers to **manage, compare and validate `.env` configuration** across environments. Create a project, add Local / Staging / Production, and instantly see which variables are missing, extra or different, without ever exposing a secret by accident.
 
 It is deliberately *not* an enterprise secrets manager. It solves one concrete problem well, and it is built to show good Laravel practice: authorization, encryption, testing and a polished UI.
@@ -175,6 +179,8 @@ The ports published on your machine (`5433`, `6380` and `8000`) are configurable
 | `demo@example.com` | `password` |
 
 with a **Laravel SaaS** project (Local, Staging, Production). The environments differ on purpose (missing, extra, different and empty variables) so every feature has something to show. All values are fake. Change or remove this account before exposing an instance publicly.
+
+> **About the public demo.** Registration is open, so anyone can create an account on the live demo. Treat it as a public sandbox: **do not enter real secrets or credentials**. The demo project is reset every time the app wakes up (`DEMO_SEED=true`), and data in other accounts may be removed at any time.
 
 ## Deploy for free (Render + Neon)
 
