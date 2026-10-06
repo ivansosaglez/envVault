@@ -18,3 +18,12 @@ it('prevents caching of authenticated pages', function () {
 it('redirects guests away from every private page', function (string $uri) {
     $this->get($uri)->assertRedirect('/login');
 })->with(['/dashboard', '/profile', '/projects/x', '/projects/x/compare', '/projects/x/validate', '/projects/x/example', '/projects/x/environments/y']);
+
+it('shows the public sandbox notice only on the hosted demo', function () {
+    config(['app.public_demo' => false]);
+    $this->get('/login')->assertDontSee('Public demo');
+
+    config(['app.public_demo' => true]);
+    $this->get('/login')->assertSee('Public demo')->assertSee('do not enter real secrets', false);
+    $this->get('/register')->assertSee('Public demo');
+});

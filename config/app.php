@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Public Demo
+    |--------------------------------------------------------------------------
+    |
+    | True on the hosted demo (it reloads the demo data on boot), which shows a
+    | "public sandbox" notice on the login and registration screens.
+    |
+    */
+
+    'public_demo' => (bool) env('DEMO_SEED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |
